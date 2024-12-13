@@ -1,73 +1,76 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    static int N, M;
-    static int[][] board;
-    static int max = 0;
-    static int[] dx = {0, 0, 1, -1};
-    static int[] dy = {1, -1, 0, 0};
-    static boolean[][] visited;
+    // 테트로미노의 모든 가능한 모양 정의
+    static int[][][] tetrominos = {
+        {{0,0}, {0,1}, {0,2}, {0,3}},
+        {{0,0}, {1,0}, {2,0}, {3,0}},
+        {{0,0}, {1,0}, {0,1}, {1,1}},
+        {{0,0}, {1,0}, {2,0}, {2,1}},
+        {{0,1}, {1,1}, {2,1}, {2,0}},
+        {{0,0}, {0,1}, {1,1}, {2,1}},
+        {{0,0}, {0,1}, {1,0}, {2,0}},
+        {{0,0}, {1,0}, {1,1}, {1,2}},
+        {{0,2}, {1,0}, {1,1}, {1,2}},
+        {{0,0}, {0,1}, {0,2}, {1,2}},
+        {{0,0}, {1,0}, {0,1}, {0,2}},
+        {{0,0}, {1,0}, {1,1}, {2,1}},
+        {{0,1}, {1,1}, {1,0}, {2,0}},
+        {{0,1}, {0,2}, {1,0}, {1,1}},
+        {{0,0}, {0,1}, {1,1}, {1,2}},
+        {{0,0}, {0,1}, {0,2}, {1,1}},
+        {{0,1}, {1,0}, {1,1}, {1,2}},
+        {{0,0}, {1,0}, {1,1}, {2,0}},
+        {{0,1}, {1,0}, {1,1}, {2,1}}
+    };
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        M = sc.nextInt();
-        board = new int[N][M];
-        visited = new boolean[N][M];
-
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        
+        int[][] board = new int[N][M];
         for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
-                board[i][j] = sc.nextInt();
+                board[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-
+        
+        System.out.println(calculateMaxSum(board, N, M));
+    }
+    
+    static int calculateMaxSum(int[][] board, int N, int M) {
+        int maxSum = 0;
+        
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                visited[i][j] = true;
-                dfs(i, j, 1, board[i][j]);
-                visited[i][j] = false;
-                checkSpecial(i, j);
+                for (int[][] tetromino : tetrominos) {
+                    int sum = 0;
+                    boolean isValid = true;
+                    
+                    for (int[] block : tetromino) {
+                        int ni = i + block[0];
+                        int nj = j + block[1];
+                        
+                        if (ni >= 0 && ni < N && nj >= 0 && nj < M) {
+                            sum += board[ni][nj];
+                        } else {
+                            isValid = false;
+                            break;
+                        }
+                    }
+                    
+                    if (isValid) {
+                        maxSum = Math.max(maxSum, sum);
+                    }
+                }
             }
         }
-
-        System.out.println(max);
-        sc.close();
-    }
-
-    static void dfs(int x, int y, int depth, int sum) {
-        if (depth == 4) {
-            max = Math.max(max, sum);
-            return;
-        }
-
-        for (int i = 0; i < 4; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
-
-            if (nx < 0 || nx >= N || ny < 0 || ny >= M || visited[nx][ny]) continue;
-
-            visited[nx][ny] = true;
-            dfs(nx, ny, depth + 1, sum + board[nx][ny]);
-            visited[nx][ny] = false;
-        }
-    }
-
-    static void checkSpecial(int x, int y) {
-        // ㅗ 모양
-        if (x > 0 && y > 0 && y < M - 1) {
-            max = Math.max(max, board[x][y] + board[x-1][y] + board[x][y-1] + board[x][y+1]);
-        }
-        // ㅜ 모양
-        if (x < N - 1 && y > 0 && y < M - 1) {
-            max = Math.max(max, board[x][y] + board[x+1][y] + board[x][y-1] + board[x][y+1]);
-        }
-        // ㅏ 모양
-        if (x > 0 && x < N - 1 && y < M - 1) {
-            max = Math.max(max, board[x][y] + board[x-1][y] + board[x+1][y] + board[x][y+1]);
-        }
-        // ㅓ 모양
-        if (x > 0 && x < N - 1 && y > 0) {
-            max = Math.max(max, board[x][y] + board[x-1][y] + board[x+1][y] + board[x][y-1]);
-        }
+        
+        return maxSum;
     }
 }
