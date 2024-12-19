@@ -1,19 +1,19 @@
-def is_valid(board, row, col, num):
+def is_valid(row, col, num):
     # 같은 행에 중복된 숫자가 없는지 확인
     for x in range(9):
-        if board[row][x] == num:
+        if sudoku_board[row][x] == num:
             return False
     
     # 같은 열에 중복된 숫자가 없는지 확인
     for x in range(9):
-        if board[x][col] == num:
+        if sudoku_board[x][col] == num:
             return False
     
     # 3x3 사각형 내에 중복된 숫자가 없는지 확인
     start_row, start_col = 3 * (row // 3), 3 * (col // 3)
     for i in range(3):
         for j in range(3):
-            if board[i + start_row][j + start_col] == num:
+            if sudoku_board[i + start_row][j + start_col] == num:
                 return False
     return True
 
@@ -22,7 +22,7 @@ def solve_sudoku(board):
         for col in range(9):
             if board[row][col] == 0:
                 for num in range(1, 10):
-                    if is_valid(board, row, col, num):
+                    if is_valid(row, col, num):
                         board[row][col] = num
                         if solve_sudoku(board):
                             return True
