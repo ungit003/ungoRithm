@@ -106,6 +106,31 @@ for i in range(n):
 
 # 10951
 
-while True:
+"""while True:
+    try:
+        a, b = map(int, input().split())
+        print(a + b)
+    except EOFError:
+        break
+
+import sys
+
+for line in sys.stdin:
+    a, b = map(int, line.split())
+    print(a + b)"""
+
+# 15552
+
+n = int(input())
+for i in range(n):
     a, b = map(int, input().split())
     print(a + b)
+
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+for _ in range(N):
+    a, b = map(int, input().split())
+    print(a + b)
+
