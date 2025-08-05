@@ -54,3 +54,69 @@ for i in range(N):
     for j in range(M):
         print(mat3[i][j], end=" ")
     print()"""
+
+# 11654
+
+"""letter = input()
+print(ord(letter))"""
+
+# 2743
+
+"""word = input()
+print(word)
+print(len(word))"""
+
+# 2744
+
+"""word = input()
+print(word.swapcase())"""
+
+# 2754
+
+"""score = { 
+'A+': 4.3, 'A0': 4.0, 'A-': 3.7,
+'B+': 3.3, 'B0': 3.0, 'B-': 2.7,
+'C+': 2.3, 'C0': 2.0, 'C-': 1.7,
+'D+': 1.3, 'D0': 1.0, 'D-': 0.7,
+'F': 0.0,
+}
+
+print(score[input()])"""
+
+# 28766
+
+"""S = input()
+i = int(input())
+print(S[i-1])"""
+
+# 11718
+
+"""while True:
+    try:
+        word = input()
+        print(word)
+    except EOFError:
+        break"""
+
+# 9086
+
+"""T = int(input())
+for i in range(T):
+    word = input()
+    print(word[0], word[-1], sep='')"""
+
+# 15964
+
+"""def new_cal(a, b):
+    return (a + b) * (a - b) 
+
+a, b = map(int, input().split())
+print(new_cal(a, b))"""
+
+# 2475
+
+def cal(a, b, c, d, e):
+    return (a*a + b*b + c*c + d*d + e*e) % 10
+
+a, b, c, d, e = map(int, input().split())
+print(cal(a, b, c, d, e))
