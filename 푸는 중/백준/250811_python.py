@@ -66,3 +66,48 @@ for i in range(N):
         else:
             print(queue[-1])"""
 
+# 10816
+
+N = int(input())
+cards = list(map(int, input().split()))
+M = int(input())
+checks = list(map(int, input().split()))
+
+check_dict = dict()
+for check in checks:
+    check_dict[check] = 0
+# print(check_dict)
+
+for card in cards:
+    if card in check_dict:
+        check_dict[card] += 1
+
+# 이렇게 하면 출력 과정에서 순서가 바뀔 수 있음
+# for value in check_dict.values():
+#     print(value, end=' ')
+for check in checks:
+    print(check_dict[check], end=' ')
+
+# 다른 방법 1
+check_dict = dict()
+for card in cards:
+    check_dict[card] = check_dict.get(card, 0) + 1  # 카드 개수 세기
+
+for check in checks:  # 입력된 순서대로 출력
+    print(check_dict.get(check, 0), end=' ')
+
+# 다른 방법 2
+from collections import Counter
+import sys
+
+input = sys.stdin.readline
+
+N = int(input())
+cards = list(map(int, input().split()))
+M = int(input())
+checks = list(map(int, input().split()))
+
+card_counts = Counter(cards)  # cards 내 각 숫자별 등장 횟수 계산
+
+# checks 순서대로 card_counts에서 개수를 가져와서 출력
+print(' '.join(str(card_counts[num]) if num in card_counts else '0' for num in checks))
