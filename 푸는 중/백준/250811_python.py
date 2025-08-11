@@ -68,7 +68,7 @@ for i in range(N):
 
 # 10816
 
-N = int(input())
+"""N = int(input())
 cards = list(map(int, input().split()))
 M = int(input())
 checks = list(map(int, input().split()))
@@ -110,4 +110,33 @@ checks = list(map(int, input().split()))
 card_counts = Counter(cards)  # cards 내 각 숫자별 등장 횟수 계산
 
 # checks 순서대로 card_counts에서 개수를 가져와서 출력
-print(' '.join(str(card_counts[num]) if num in card_counts else '0' for num in checks))
+print(' '.join(str(card_counts[num]) if num in card_counts else '0' for num in checks))"""
+
+# 9012
+
+def check_VPS(string):
+    ans = 'NO'
+    if string[0] == ')':
+        return print(ans)
+    stack = ['(']
+    for i in range(1, len(string)):
+        if string[i] == '(':
+            stack.append('(')
+        else:
+            if len(stack) == 0:
+                return print(ans)
+            elif stack[-1] == '(':
+                stack.pop()
+            elif stack[-1] == ')':
+                stack.append(')')
+    if len(stack) == 0:
+        ans = 'YES'
+    return print(ans)
+    
+T = int(input())
+PS = []
+for _ in range(T):
+    PS.append(input())
+
+for case in PS:
+    check_VPS(case)
