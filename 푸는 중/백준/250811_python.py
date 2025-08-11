@@ -114,7 +114,7 @@ print(' '.join(str(card_counts[num]) if num in card_counts else '0' for num in c
 
 # 9012
 
-def check_VPS(string):
+"""def check_VPS(string):
     ans = 'NO'
     if string[0] == ')':
         return print(ans)
@@ -139,4 +139,19 @@ for _ in range(T):
     PS.append(input())
 
 for case in PS:
-    check_VPS(case)
+    check_VPS(case)"""
+
+# 2164
+from collections import deque
+
+N = int(input())
+cards = deque(range(1, N+1))
+# print(cards)
+
+while True:
+    if len(cards) == 1:
+        break
+    cards.popleft()
+    moving = cards.popleft()
+    cards.append(moving)
+print(cards[0])
