@@ -159,7 +159,7 @@ print(cards[0])"""
 
 # 1018
 
-def check_change(y, x):
+"""def check_change(y, x):
     case1, case2 = 0, 0
     for i in range(y, y+8):
         for j in range(x, x+8):
@@ -193,4 +193,26 @@ ans_list = []
 for i in range(M-7):
     for j in range(N-7):
         ans_list.append(check_change(i, j))
-print(min(ans_list))
+print(min(ans_list))"""
+
+# 11650
+
+# 버블정렬
+N = int(input())
+coors = []
+for _ in range(N):
+    coors.append(list(map(int, input().split())))
+# print(coors)
+
+while True:
+    change_cnt = 0
+    for i in range(N-1):
+        if coors[i][0] > coors[i+1][0] or (coors[i][0] == coors[i+1][0] and coors[i][1] > coors[i+1][1]):
+            coors[i], coors[i+1] = coors[i+1], coors[i]
+            change_cnt += 1
+            # print(coors, change_cnt)
+    if change_cnt == 0:
+        break
+# print(coors)
+for coor in coors:
+    print(coor[0], coor[1])
